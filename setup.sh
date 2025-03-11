@@ -50,6 +50,8 @@ docker ps | tee -a "$LOG_FILE"
 log "Checking for AWS credentials..."
 if ! aws sts get-caller-identity >/dev/null 2>&1; then
     log "AWS credentials not found. Prompting user for setup."
+    read -p "Enter AWS S3 region: " AWS_S3_REGION
+    read -p "Enter AWS S3 bucket: " AWS_S3_BUCKET
     read -p "Enter AWS Access Key: " AWS_ACCESS_KEY_ID
     read -s -p "Enter AWS Secret Access Key: " AWS_SECRET_ACCESS_KEY
     echo
@@ -60,11 +62,12 @@ if ! aws sts get-caller-identity >/dev/null 2>&1; then
 [default]
 aws_access_key_id = $AWS_ACCESS_KEY_ID
 aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
+region = $AWS_S3_REGION
+aws_s3_bucket = $AWS_S3_BUCKET
 EOF
 
     cat > ~/.aws/config <<EOF
 [default]
-region = us-east-1
 output = json
 EOF
 
