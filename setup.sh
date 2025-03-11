@@ -13,7 +13,7 @@ handle_error() {
 }
 
 trap handle_error ERR
-set -e  # Exit on error
+set -e 
 
 log "Starting Nextcloud, Netdata, and S3 sync setup..."
 
